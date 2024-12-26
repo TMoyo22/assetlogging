@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 350px;
+        }
+        .form-title {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            color: #000;
+            margin-bottom: 1.5rem;
+        }
+        .input-container {
+            margin-bottom: 1rem;
+        }
+        .input-container input {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .submit {
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            background-color: royalblue;
+            color: #ffffff;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+        .login-link {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <form class="form" id="signupForm">
+        <p class="form-title">Create an account</p>
+        <div class="input-container">
+            <input placeholder="Enter email" type="email" id="email" required>
+        </div>
+        <div class="input-container">
+            <input placeholder="Enter password" type="password" id="password" required>
+        </div>
+        <div class="input-container">
+            <input placeholder="Confirm password" type="password" id="confirmPassword" required>
+        </div>
+        <button class="submit" type="submit">Sign up</button>
+        <p class="login-link">
+            Already have an account?
+            <a href="login.html">Log in</a>
+        </p>
+    </form>
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords don't match");
+                return;
+            }
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message);
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message || 'Signup failed');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred during signup');
+            }
+        });
+    </script>
+</body>
+</html>
+
