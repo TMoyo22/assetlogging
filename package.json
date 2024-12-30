@@ -1,4 +1,9 @@
+
 {
+  "scripts": {
+    "build": "npm install && npm run build"
+},
+
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.7",
@@ -17,4 +22,6 @@
     "rate-limiter-flexible": "^5.0.4",
     "winston": "^3.17.0"
   }
+
+
 }
